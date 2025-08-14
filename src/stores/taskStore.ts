@@ -16,14 +16,7 @@ export const useTaskStore = defineStore('task', () => {
     status: ''
   })
 
-  const fetchTasks = async () => {
-    try {
-      tasks.value = await taskService.getAll()
-    } catch (err) {
-      console.log(err)
-    }
-  }
-
+  // Filter list
   const filteredTasks = computed(() => {
     return tasks.value.filter(task => {
         const matchesTitle = filters.value.title
@@ -41,6 +34,39 @@ export const useTaskStore = defineStore('task', () => {
   const clearFilters = () => {
     filters.value.title = ''
     filters.value.status = ''
+  }
+
+  // Pagination functions
+  const currentPage = ref(1)
+  const pageSize = 10 // quantos itens por página
+
+  const resetPage = () => {
+    goToPage(1)
+  }
+
+  const goToPage = (page: number) => {
+    if (page >= 1 && page <= totalPages.value) {
+      currentPage.value = page
+    }
+  }
+
+  const totalPages = computed(() => {
+    return Math.ceil(filteredTasks.value.length / pageSize)
+  })
+
+  // Fake Pagination
+  const paginatedTasks = computed(() => {
+    const start = (currentPage.value - 1) * pageSize
+    return filteredTasks.value.slice(start, start + pageSize)
+  })
+
+  //CRUD functions
+  const fetchTasks = async () => {
+    try {
+      tasks.value = await taskService.getAll()
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   const createTask = async (task: Omit<Task, 'id'>) => {
@@ -91,6 +117,11 @@ export const useTaskStore = defineStore('task', () => {
     filters,
     filteredTasks,
     clearFilters,
+    resetPage,
+    goToPage,
+    paginatedTasks,
+    currentPage,
+    totalPages,
     fetchTasks,
     createTask,
     getTask,

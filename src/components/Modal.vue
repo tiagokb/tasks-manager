@@ -1,31 +1,28 @@
 <script setup lang="ts">
-import { defineProps, defineEmits } from 'vue'
 
-const props = defineProps<{
-  title: string
-  show: boolean
-}>()
+import { useModalStore } from '../stores/modalStore'
+import { storeToRefs } from 'pinia'
 
-const emit = defineEmits(['close'])
+const modalStore = useModalStore()
+const { isOpen, current } = storeToRefs(modalStore)
+const { close } = modalStore
+
 </script>
 
 <template>
   <Teleport to="body">
     <div
-      v-if="props.show"
-      class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+      v-if="isOpen"
+      class="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
     >
-      <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative">
-        <h2 class="text-lg font-bold mb-4">{{ props.title }}</h2>
-
-        <slot></slot>
-
+      <div class="bg-white rounded-lg shadow-lg p-4 w-full max-w-lg relative">
         <button
-          @click="emit('close')"
-          class="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+          @click="close"
+          class="absolute top-2 right-2 text-gray-500 hover:text-black"
         >
-          ✖
+          ✕
         </button>
+        <component :is="current?.view" v-bind="current?.props" />
       </div>
     </div>
   </Teleport>
