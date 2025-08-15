@@ -4,7 +4,8 @@ import { useAttrs } from 'vue'
 
 interface Props {
   id: string,
-  label: string
+  label: string,
+  errorMessage?: string
 }
 
 const props = defineProps<Props>()
@@ -21,5 +22,6 @@ const attrs = useAttrs()
       v-bind="attrs"
       class="input"
     />
+    <span v-if="errorMessage" class="text-danger text-sm">{{ errorMessage }}</span>
   </div>
 </template>
