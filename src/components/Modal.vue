@@ -1,39 +1,42 @@
 <script setup lang="ts">
 
 import { useModalStore } from '../stores/modalStore'
-import { storeToRefs } from 'pinia'
+import BaseButton from '@/components/BaseButton.vue'
+import { shallowRef, watch } from 'vue'
 
 const modalStore = useModalStore()
-const { isOpen, current } = storeToRefs(modalStore)
-const { close } = modalStore
 
+const currentView = shallowRef(null)
+
+watch(
+  () => modalStore.current,
+  (newVal) => {
+    if (newVal) {
+      currentView.value = newVal.view
+    }
+  },
+  { immediate: true }
+)
 </script>
 
 <template>
   <Teleport to="body">
     <div
-      v-if="isOpen"
-      class="fixed inset-0 flex items-center justify-center bg-black/80 z-50"
+      v-if="modalStore.isOpen"
+      class="fixed inset-0 flex items-center justify-center bg-surface-dark/50 z-50"
     >
 
       <div
-        class="flex flex-col items-center justify-center w-auto max-w-4xl h-auto max-h-[90%] bg-white rounded-lg shadow-2xl px-8 py-4">
+        class="flex flex-col items-center justify-center w-auto min-w-xs max-w-4xl h-[80%] max-h-[90vh] bg-surface rounded-lg shadow-2xl px-8 py-8">
         <div class="flex flex-row w-full justify-end">
-          <button
-            @click="close"
-            class="text-gray-500 hover:text-black"
-          >
+          <BaseButton button-type="ghost" class="text-danger" @click="modalStore.close()">
             ✕
-          </button>
+          </BaseButton>
         </div>
         <div class="w-full h-full py-4">
-          <component :is="current?.view" v-bind="current?.props" />
+          <component :is="currentView" v-bind="modalStore.current?.props" />
         </div>
       </div>
-
-      <!--      <div class="bg-white rounded-lg shadow-lg p-4 w-full max-w-lg relative m-10 h-[%]">-->
-
-      <!--      </div>-->
     </div>
   </Teleport>
 </template>

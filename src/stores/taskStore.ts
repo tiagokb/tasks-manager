@@ -39,6 +39,7 @@ export const useTaskStore = defineStore('task', () => {
   // Pagination functions
   const currentPage = ref(1)
   const pageSize = 10 // quantos itens por página
+  const order = 'desc'
 
   const resetPage = () => {
     goToPage(1)
@@ -63,16 +64,15 @@ export const useTaskStore = defineStore('task', () => {
   //CRUD functions
   const fetchTasks = async () => {
     try {
-      tasks.value = await taskService.getAll()
+      tasks.value = await taskService.getAll(order)
     } catch (err) {
-      console.log(err)
+      console.log("error while fetch", err)
     }
   }
 
   const createTask = async (task: Omit<Task, 'id'>) => {
     try {
       const newTask = await taskService.create(task)
-
       if (!tasks.value.find(t => t.id === newTask.id)) {
         tasks.value.push(newTask)
       }
@@ -81,7 +81,7 @@ export const useTaskStore = defineStore('task', () => {
     }
   }
 
-  const getTask = async (id: number): Promise<Task | undefined> => {
+  const getTask = async (id: string): Promise<Task | undefined> => {
     try {
       const task = tasks.value.find(t => t.id === id)
       if (task) return task
@@ -93,7 +93,7 @@ export const useTaskStore = defineStore('task', () => {
     }
   }
 
-  const updateTask = async (id: number, task: Omit<Task, 'id'>): Promise<Task | undefined> => {
+  const updateTask = async (id: string, task: Omit<Task, 'id' | 'createdAt' | 'updatedAt'>): Promise<Task | undefined> => {
     try {
       const updatedTask = await taskService.update(task)
       const index = tasks.value.findIndex(t => t.id === updatedTask.id)
@@ -103,7 +103,7 @@ export const useTaskStore = defineStore('task', () => {
     }
   }
 
-  const deleteTask = async (id: number) => {
+  const deleteTask = async (id: string) => {
     try {
       await taskService.delete(id)
       tasks.value = tasks.value.filter(t => t.id !== id)
@@ -121,6 +121,7 @@ export const useTaskStore = defineStore('task', () => {
     goToPage,
     paginatedTasks,
     currentPage,
+    order,
     totalPages,
     fetchTasks,
     createTask,

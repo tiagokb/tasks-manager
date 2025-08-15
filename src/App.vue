@@ -6,8 +6,8 @@ import Modal from '@/components/Modal.vue'
 
 <template>
 
-  <header class="flex flex-row w-full justify-between bg-black text-white py-1">
-    <p class="px-4"><a href="https://github.com/tiagokb" target="_blank">Github Page</a></p>
+  <header class="flex flex-row w-full justify-between bg-secondary text-on-secondary py-1">
+    <p class="px-4"><a href="https://github.com/tiagokb/tasks-manager" target="_blank">Github Page</a></p>
     <h1><strong>Task Manager Demo</strong></h1>
     <nav class="px-4">
       <RouterLink to="/">Home</RouterLink>
