@@ -48,10 +48,10 @@ const save = () => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 justify-center items-center px-10 w-full h-full">
+  <div class="flex flex-col gap-4 justify-center items-center px-2 w-full h-full">
     <h2 class="text-xl font-bold mb-4 bg-surface text-on-surface">Criar Nova Tarefa</h2>
 
-    <form class="flex flex-col gap-4 justify-between items-center px-10 w-full h-full"
+    <form class="flex flex-col gap-4 justify-between items-center w-full h-full"
           @submit.prevent="save">
       <BaseInput class="w-full" :id="'form-title-create'" :label="'Titulo da Tarefa'"
                  v-model="taskForm.title"

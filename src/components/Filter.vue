@@ -21,6 +21,7 @@ const clearFilters = () => {
 
     <BaseSelect class="w-full md:w-auto" :id="'filter-status'" :label="'Status'" v-model="store.filters.status"
                 @change="store.resetPage">
+      <option value="">Todos</option>
       <option v-for="status in Object.values(TaskStatus)" :key="status" :value="status">
         {{ status }}
       </option>

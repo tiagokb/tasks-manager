@@ -9,9 +9,9 @@ onMounted(() => store.fetchTasks())
 </script>
 
 <template>
-  <div class="flex flex-col w-full h-full">
+  <div class="flex flex-col w-full h-[300px]">
     <RecycleScroller
-      class="flex-1 w-full h-full"
+      class="flex-1 w-full"
       :items="store.tasks"
       :item-size="64"
       :min-item-size="64"

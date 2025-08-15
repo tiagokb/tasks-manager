@@ -27,7 +27,7 @@ watch(
     >
 
       <div
-        class="flex flex-col items-center justify-center w-auto min-w-xs max-w-4xl h-[80%] max-h-[90vh] bg-surface rounded-lg shadow-2xl px-8 py-8">
+        class="flex flex-col items-center justify-center w-[80%] h-fit xl:w-[80%] xl:max-w-1/2 bg-surface rounded-lg shadow-2xl px-4 py-8">
         <div class="flex flex-row w-full justify-end">
           <BaseButton button-type="ghost" class="text-danger" @click="modalStore.close()">
             ✕

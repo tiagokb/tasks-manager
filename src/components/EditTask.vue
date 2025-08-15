@@ -54,26 +54,30 @@ const save = () => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 justify-between items-center px-10 w-full h-full">
+  <div class="flex flex-col gap-4 justify-between items-center px-2 w-full h-full">
     <h2 class="text-xl font-bold mb-4 bg-surface text-on-surface">
       Editar tarefa, id: {{ props.taskId }}</h2>
 
-    <BaseInput class="w-full" :id="'form-title-edit'" :label="'Titulo da Tarefa'"
-               v-model="taskForm.title"
-               placeholder="Novo título" :errorMessage="errors.title" />
+    <form class="flex flex-col gap-4 justify-between items-center w-full h-full"
+          @submit.prevent="save">
+      <BaseInput class="w-full" :id="'form-title-edit'" :label="'Titulo da Tarefa'"
+                 v-model="taskForm.title"
+                 placeholder="Novo título" :errorMessage="errors.title" />
 
-    <BaseSelect class="w-full" :id="'form-status-edit'" :label="'Status'" v-model="taskForm.status"
-                @change="store.resetPage" :errorMessage="errors.status">
-      <option v-for="status in TaskStatus" :key="status"
-              :value="status">{{ status }}
-      </option>
-    </BaseSelect>
+      <BaseSelect class="w-full" :id="'form-status-edit'" :label="'Status'"
+                  v-model="taskForm.status"
+                  @change="store.resetPage" :errorMessage="errors.status">
+        <option v-for="status in TaskStatus" :key="status"
+                :value="status">{{ status }}
+        </option>
+      </BaseSelect>
 
-    <div class="flex flex-row justify-center items-center w-full mt-10">
+      <div class="flex flex-row justify-center items-center w-full mt-10">
 
-      <BaseButton button-type="primary" @click="save">
-        Salvar
-      </BaseButton>
-    </div>
+        <BaseButton button-type="primary" type="submit">
+          Salvar
+        </BaseButton>
+      </div>
+    </form>
   </div>
 </template>
