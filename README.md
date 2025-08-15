@@ -1,4 +1,4 @@
-# Todo List - Vue 3
+# Task Manager - Vue 3
 
 Aplicação de lista de tarefas desenvolvida com **Vue 3**, **Pinia** e **TailwindCSS**, utilizando **json-server** como backend mock para simular uma API REST.
 
@@ -27,8 +27,8 @@ Aplicação de lista de tarefas desenvolvida com **Vue 3**, **Pinia** e **Tailwi
 Clone o repositório:
 
 ```bash
-git clone <url-do-repo>
-cd todo-list
+git clone https://github.com/tiagokb/tasks-manager.git
+cd tasks-manager
 ```
 
 Instale as dependências:
